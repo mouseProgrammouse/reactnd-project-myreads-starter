@@ -12,7 +12,7 @@ body, .app {
 
 .list-books-title {
   padding: 10px 0;
-  background: #2e7c31;
+  background: #2e7d32;
   text-align: center;
 }
 .list-books-title h1 {
@@ -135,15 +135,13 @@ body, .app {
 
 .book-top {
   position: relative;
-  height: 200px;
-  display: flex;
   align-items: flex-end;
 }
 
 .book-shelf-changer {
   position: absolute;
-  right: 0;
-  bottom: -10px;
+  right: 15px;
+  top: 150px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
