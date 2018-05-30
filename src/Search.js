@@ -16,19 +16,20 @@ class Search extends Component {
      clearResult: PropTypes.func.isRequired
   }
 
-  
+
   updateShelfs = (books, searchResult) => {
-      searchResult.map((resultBook)=>{
+      return searchResult.map((resultBook)=>{
+        //if find book on user's shelf return it
         const onShelf = books.filter((book)=>(book.id===resultBook.id))
-        return (onShelf.length !== 0)?onShelf:resultBook.shelf = 'none'
+        resultBook.shelf = 'none'//return book from search books without shelf
+        return (onShelf.length !== 0)?onShelf[0]:resultBook
       })
   }
 
   render () {
     const {onSearch, books, searchResult, updateShelfData, shelfs, clearResult} = this.props
 
-    this.updateShelfs(books, searchResult)
-
+    console.log('update Search')
     return (
       <div className="search-books">
             <div className="search-books-bar">
@@ -39,7 +40,7 @@ class Search extends Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                 {searchResult.map((book, index) => (
+                 {this.updateShelfs(books, searchResult).map((book, index) => (
                        <li key={ index.toString() }><Book book={book} shelfs={shelfs} updateShelfData={updateShelfData}/></li>
                   ))}
               </ol>

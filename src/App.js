@@ -20,16 +20,21 @@ class BooksApp extends Component {
       this.setState({ books })
     })
   }
-  
+
   //change book's shelf
   updateShelf = (e, bookToUpdate) => {
     const newShelf = e.target.value
-    let books = this.state.books.filter((book) => (book !== bookToUpdate))
-    if (newShelf !== 'None') {
-      bookToUpdate.shelf = newShelf
-      books = books.concat([ bookToUpdate ])
-    }
-    this.setState({ books })
+    let books = this.state.books.filter((book) => (book.id !== bookToUpdate.id))
+    console.log(bookToUpdate)
+    if (newShelf !== 'none') {
+      //add a new book
+      BooksAPI.get(bookToUpdate.id).then((newBook) => {
+        newBook.shelf = newShelf
+        books = books.concat(newBook)
+        this.setState({ books })
+      })
+    } else //"delete" book
+      this.setState({ books })
     //update data on server
     BooksAPI.update(bookToUpdate,newShelf)
   }
@@ -57,7 +62,7 @@ class BooksApp extends Component {
   }
 
   render() {
-    
+
     return (
       <div className="app">
        <Route exact path='/' render={() => (
