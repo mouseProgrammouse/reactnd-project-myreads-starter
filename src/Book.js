@@ -1,25 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 /*
   Component rendered information about book:
   cover image, title, authors, shelf
 */
-class Book extends Component {
-  static propTypes = {
-     book: PropTypes.object.isRequired,
-     shelfs: PropTypes.array.isRequired,
-     updateShelfData: PropTypes.func.isRequired
-     }
-  
-  render () {
-    const { book, updateShelfData, shelfs } = this.props
+const Book = (props) => {
+    const { book, updateShelfData, shelfs } = props
 
     const coverStyle = {
       width: 128,
-      height: 193,
-      backgroundImage: 'url(' + book.imageLinks.smallThumbnail + ')'
+      height: 193
     }
+
+    if (book.imageLinks.smallThumbnail)
+      coverStyle.backgroundImage = 'url(' + book.imageLinks.smallThumbnail + ')'
 
     return (
       <div className="book">
@@ -39,7 +34,13 @@ class Book extends Component {
         </div>
       </div>
     )
-  }
+  //}
 }
-      
+
+Book.propTypes = {
+    book: PropTypes.object.isRequired,
+    shelfs: PropTypes.array.isRequired,
+    updateShelfData: PropTypes.func.isRequired
+    }
+
 export default Book

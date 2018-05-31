@@ -28,8 +28,8 @@ class BooksShelf extends Component {
                <h2 className="bookshelf-title">{shelf.title}</h2>
                  <div className="bookshelf-books">
                    <ol className="books-grid">
-                      {books.filter(book => (book.shelf === shelf.key)).map((book, index) => (
-                       <li key={ index.toString() }><Book book={book} shelfs={shelfs} updateShelfData={updateShelfData}/></li>
+                      {books.filter(book => (book.shelf === shelf.key)).map((book) => (
+                       <li key={ book.id }><Book book={book} shelfs={shelfs} updateShelfData={updateShelfData}/></li>
                       ))}
                    </ol>
                  </div>

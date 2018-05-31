@@ -25,18 +25,19 @@ class BooksApp extends Component {
   updateShelf = (e, bookToUpdate) => {
     const newShelf = e.target.value
     let books = this.state.books.filter((book) => (book.id !== bookToUpdate.id))
-    console.log(bookToUpdate)
     if (newShelf !== 'none') {
       //add a new book
-      BooksAPI.get(bookToUpdate.id).then((newBook) => {
-        newBook.shelf = newShelf
-        books = books.concat(newBook)
-        this.setState({ books })
-      })
-    } else //"delete" book
-      this.setState({ books })
+        BooksAPI.get(bookToUpdate.id).then((newBook) => {
+          newBook.shelf = newShelf
+          books = books.concat(newBook)
+        })
+    }
     //update data on server
-    BooksAPI.update(bookToUpdate,newShelf)
+    BooksAPI.update(bookToUpdate,newShelf).then(() => {
+      this.setState({ books })
+    }).catch((error)=>{
+      console.error('Something wrong with shelf update: '+error)
+    })
   }
 
   //search books: for search uses BookAPI
@@ -49,10 +50,10 @@ class BooksApp extends Component {
         this.setState({ searchResult })
       }).catch((error) => {
         console.error('Something wrong with search: '+error)
-        this.setState({ searchResult: [] })
+        this.setState(this.clearSearchResult())
       })
     }
-    this.setState({ searchResult: [] })
+    this.setState(this.clearSearchResult())
   }
 
   clearSearchResult = () => {

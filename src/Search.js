@@ -29,7 +29,6 @@ class Search extends Component {
   render () {
     const {onSearch, books, searchResult, updateShelfData, shelfs, clearResult} = this.props
 
-    console.log('update Search')
     return (
       <div className="search-books">
             <div className="search-books-bar">
@@ -40,8 +39,8 @@ class Search extends Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                 {this.updateShelfs(books, searchResult).map((book, index) => (
-                       <li key={ index.toString() }><Book book={book} shelfs={shelfs} updateShelfData={updateShelfData}/></li>
+                 {this.updateShelfs(books, searchResult).map((book) => (
+                       <li key={ book.id }><Book book={book} shelfs={shelfs} updateShelfData={updateShelfData}/></li>
                   ))}
               </ol>
             </div>
