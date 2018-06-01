@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Book from './Book'
@@ -7,15 +7,8 @@ import Book from './Book'
   Component rendered main page:
    - diff shelfs with user's book on it
 */
-class BooksShelf extends Component {
-  static propTypes = {
-     shelfs: PropTypes.array.isRequired,
-     books: PropTypes.array.isRequired,
-     updateShelfData: PropTypes.func.isRequired
-  }
-
-  render () {
-    const { books, shelfs, updateShelfData } = this.props;
+const BooksShelf = (props) => {
+    const { books, shelfs, updateShelfData } = props
 
     return (
       <div className='list-books'>
@@ -41,7 +34,12 @@ class BooksShelf extends Component {
         </div>
       </div>
     )
-  }
 }
+
+BooksShelf.propTypes = {
+     shelfs: PropTypes.array.isRequired,
+     books: PropTypes.array.isRequired,
+     updateShelfData: PropTypes.func.isRequired
+  }
 
 export default BooksShelf

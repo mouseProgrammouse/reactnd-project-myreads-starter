@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Book from './Book'
@@ -6,28 +6,8 @@ import Book from './Book'
 /*
   Component rendered search page
 */
-class Search extends Component {
-  static propTypes = {
-     books: PropTypes.array.isRequired,
-     searchResult: PropTypes.array.isRequired,
-     shelfs: PropTypes.array.isRequired,
-     onSearch: PropTypes.func.isRequired,
-     updateShelfData: PropTypes.func.isRequired,
-     clearResult: PropTypes.func.isRequired
-  }
-
-
-  updateShelfs = (books, searchResult) => {
-      return searchResult.map((resultBook)=>{
-        //if find book on user's shelf return it
-        const onShelf = books.filter((book)=>(book.id===resultBook.id))
-        resultBook.shelf = 'none'//return book from search books without shelf
-        return (onShelf.length !== 0)?onShelf[0]:resultBook
-      })
-  }
-
-  render () {
-    const {onSearch, books, searchResult, updateShelfData, shelfs, clearResult} = this.props
+const Search = (props) => {
+    const {onSearch, searchResult, updateShelfData, shelfs, clearResult} = props
 
     return (
       <div className="search-books">
@@ -39,14 +19,21 @@ class Search extends Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                 {this.updateShelfs(books, searchResult).map((book) => (
+                 {searchResult.map((book) => (
                        <li key={ book.id }><Book book={book} shelfs={shelfs} updateShelfData={updateShelfData}/></li>
                   ))}
               </ol>
             </div>
          </div>
     )
-  }
 }
+
+Search.propTypes = {
+     searchResult: PropTypes.array.isRequired,
+     shelfs: PropTypes.array.isRequired,
+     onSearch: PropTypes.func.isRequired,
+     updateShelfData: PropTypes.func.isRequired,
+     clearResult: PropTypes.func.isRequired
+  }
 
 export default Search

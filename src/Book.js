@@ -34,7 +34,6 @@ const Book = (props) => {
         </div>
       </div>
     )
-  //}
 }
 
 Book.propTypes = {

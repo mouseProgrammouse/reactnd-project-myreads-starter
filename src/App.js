@@ -40,6 +40,15 @@ class BooksApp extends Component {
     })
   }
 
+  getShelfsForSearch = (books, searchResult) => {
+      return searchResult.map((resultBook)=>{
+        //if find book on user's shelf return it
+        const onShelf = books.filter((book)=>(book.id===resultBook.id))
+        resultBook.shelf = 'none'//return book from search books without shelf
+        return (onShelf.length !== 0)?onShelf[0]:resultBook
+      })
+  }
+
   //search books: for search uses BookAPI
   searchBooks = (query) => {
     query = query.trim()
@@ -47,6 +56,10 @@ class BooksApp extends Component {
       BooksAPI.search(query).then((searchResult) => {
         if (searchResult.error === 'empty query')
           searchResult = []
+        else {
+          //update shelfs
+          searchResult = this.getShelfsForSearch(this.state.books, searchResult)
+        }
         this.setState({ searchResult })
       }).catch((error) => {
         console.error('Something wrong with search: '+error)
@@ -70,7 +83,7 @@ class BooksApp extends Component {
           <BooksShelf books={this.state.books} shelfs={this.state.shelfs} updateShelfData={this.updateShelf}/>
         )} />
         <Route path='/search' render={() =>(
-          <Search onSearch={this.searchBooks} shelfs={this.state.shelfs} books={this.state.books} searchResult={this.state.searchResult} updateShelfData={this.updateShelf} clearResult={this.clearSearchResult}/>
+          <Search onSearch={this.searchBooks} shelfs={this.state.shelfs} searchResult={this.state.searchResult} updateShelfData={this.updateShelf} clearResult={this.clearSearchResult}/>
         )} />
       </div>
     )
